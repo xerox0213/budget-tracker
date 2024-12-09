@@ -7,7 +7,7 @@ import BrandLogo from "@/components/ui/brand-logo/BrandLogo.vue";
 
 <template>
   <header
-    class="grid grid-cols-[auto_1fr_auto] items-center border-b border-b-gray-200 px-5 py-2 md:grid-cols-[1fr_auto]"
+    class="grid grid-cols-[auto_1fr_auto] items-center border-b border-b-gray-200 px-5 py-3 md:grid-cols-[1fr_auto] md:px-7 md:py-5"
   >
     <SheetNavBar />
     <div
