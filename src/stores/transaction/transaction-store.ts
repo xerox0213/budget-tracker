@@ -1,12 +1,30 @@
-import { Transaction } from "@/stores/transaction/transaction-types.ts";
+import { useCategoryStore } from "@/stores/category/category-store.ts";
+import {
+  Transaction,
+  TransactionWithCategory,
+} from "@/stores/transaction/transaction-types.ts";
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const setupStore = () => {
   const transactions = ref<Transaction[]>([]);
 
+  const transactionsWithCategory = computed<TransactionWithCategory[]>(() => {
+    const categoryStore = useCategoryStore();
+    const transactionsWithCategory: TransactionWithCategory[] = [];
+
+    for (const transaction of transactions.value) {
+      const category = categoryStore.getCategory(transaction.categoryId);
+      if (!category) continue;
+      transactionsWithCategory.push({ ...transaction, category });
+    }
+
+    return transactionsWithCategory;
+  });
+
   return {
     transactions,
+    transactionsWithCategory,
   };
 };
 
