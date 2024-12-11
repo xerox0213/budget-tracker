@@ -15,10 +15,14 @@ const setupStore = () => {
     categories.value.filter((category: Category) => category.id !== categoryId);
   };
 
+  const getCategory = (categoryId: Category["id"]) =>
+    categories.value.find((category) => category.id === categoryId);
+
   return {
     addCategory,
     categories,
     deleteCategory,
+    getCategory,
   };
 };
 
