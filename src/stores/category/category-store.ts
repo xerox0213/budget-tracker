@@ -11,9 +11,14 @@ const setupStore = () => {
     categories.value.push(category);
   };
 
+  const deleteCategory = (categoryId: Category["id"]): void => {
+    categories.value.filter((category: Category) => category.id !== categoryId);
+  };
+
   return {
     addCategory,
     categories,
+    deleteCategory,
   };
 };
 
