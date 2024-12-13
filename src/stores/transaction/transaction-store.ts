@@ -1,5 +1,6 @@
+import { CategoryType } from "@/stores/category/category-schema.ts";
 import { useCategoryStore } from "@/stores/category/category-store.ts";
-import { Category, CategoryType } from "@/stores/category/category-types.ts";
+import { Category } from "@/stores/category/category-types.ts";
 import { transactionDataSchema } from "@/stores/transaction/transaction-schema.ts";
 import {
   Transaction,
@@ -32,7 +33,7 @@ const setupStore = () => {
 
     for (const transaction of transactions.value) {
       const category = categoryStore.getCategory(transaction.categoryId);
-      if (!category || category.type != CategoryType.INCOME) continue;
+      if (!category || category.type != CategoryType.enum.income) continue;
       amount += transaction.amount;
     }
 
@@ -45,7 +46,7 @@ const setupStore = () => {
 
     for (const transaction of transactions.value) {
       const category = categoryStore.getCategory(transaction.categoryId);
-      if (!category || category.type != CategoryType.EXPENSE) continue;
+      if (!category || category.type != CategoryType.enum.expense) continue;
       amount += transaction.amount;
     }
 

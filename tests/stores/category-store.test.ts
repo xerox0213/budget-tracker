@@ -1,11 +1,11 @@
 import { createPinia, setActivePinia } from "pinia";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
+import { CategoryType } from "../../src/stores/category/category-schema";
 import { useCategoryStore } from "../../src/stores/category/category-store";
 import {
   Category,
   CategoryData,
-  CategoryType,
 } from "../../src/stores/category/category-types";
 import { useTransactionStore } from "../../src/stores/transaction/transaction-store";
 
@@ -21,7 +21,7 @@ describe("add category action", () => {
     const categoryData: CategoryData = {
       icon: "😊",
       name: "cool",
-      type: CategoryType.EXPENSE,
+      type: CategoryType.enum.expense,
     };
 
     categoryStore.addCategory(categoryData);
@@ -46,7 +46,7 @@ describe("delete category action", () => {
       icon: "🤑",
       id: "1",
       name: "wait",
-      type: CategoryType.INCOME,
+      type: CategoryType.enum.income,
     };
     const spy = vi.spyOn(transactionStore, "deleteTransactionByCategoryId");
     categoryStore.categories.push(category);
@@ -65,7 +65,7 @@ describe("view category", () => {
       icon: "🤑",
       id: categoryId,
       name: "wait",
-      type: CategoryType.INCOME,
+      type: CategoryType.enum.income,
     };
     categoryStore.categories.push(category);
 
@@ -89,7 +89,7 @@ describe("category exists action", () => {
       icon: "🤑",
       id: "1",
       name: "wait",
-      type: CategoryType.INCOME,
+      type: CategoryType.enum.income,
     };
     categoryStore.categories.push(category);
 
