@@ -12,7 +12,9 @@ const setupStore = () => {
   };
 
   const deleteCategory = (categoryId: Category["id"]): void => {
-    categories.value.filter((category) => category.id !== categoryId);
+    categories.value = categories.value.filter(
+      (category) => category.id !== categoryId,
+    );
   };
 
   const getCategory = (categoryId: Category["id"]) =>
