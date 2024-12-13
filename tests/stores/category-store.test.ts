@@ -1,5 +1,5 @@
 import { createPinia, setActivePinia } from "pinia";
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { useCategoryStore } from "../../src/stores/category/category-store";
 import {
@@ -7,6 +7,7 @@ import {
   CategoryData,
   CategoryType,
 } from "../../src/stores/category/category-types";
+import { useTransactionStore } from "../../src/stores/transaction/transaction-store";
 
 let categoryStore: ReturnType<typeof useCategoryStore>;
 
@@ -30,19 +31,30 @@ describe("add category action", () => {
 });
 
 describe("delete category action", () => {
+  let transactionStore: ReturnType<typeof useTransactionStore>;
+
+  beforeEach(() => {
+    transactionStore = useTransactionStore();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it("should delete the given category", () => {
-    const categoryId = "1";
     const category: Category = {
       icon: "🤑",
-      id: categoryId,
+      id: "1",
       name: "wait",
       type: CategoryType.INCOME,
     };
+    const spy = vi.spyOn(transactionStore, "deleteTransactionByCategoryId");
     categoryStore.categories.push(category);
 
-    categoryStore.deleteCategory(categoryId);
+    categoryStore.deleteCategory(category.id);
 
     expect(categoryStore.categories).not.toContainEqual(category);
+    expect(spy).toHaveBeenCalledWith(category.id);
   });
 });
 
