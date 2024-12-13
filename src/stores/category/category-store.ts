@@ -24,9 +24,13 @@ const setupStore = () => {
   const getCategory = (categoryId: Category["id"]) =>
     categories.value.find((category) => category.id === categoryId);
 
+  const categoryExists = (categoryId: Category["id"]) =>
+    getCategory(categoryId) != undefined;
+
   return {
     addCategory,
     categories,
+    categoryExists,
     deleteCategory,
     getCategory,
   };
