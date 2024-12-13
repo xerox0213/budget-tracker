@@ -1,13 +1,9 @@
+import { CategoryType } from "@/stores/category/category-schema.ts";
+import { useCategoryStore } from "@/stores/category/category-store.ts";
+import { Category, CategoryData } from "@/stores/category/category-types.ts";
+import { useTransactionStore } from "@/stores/transaction/transaction-store.ts";
 import { createPinia, setActivePinia } from "pinia";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-
-import { CategoryType } from "../../src/stores/category/category-schema";
-import { useCategoryStore } from "../../src/stores/category/category-store";
-import {
-  Category,
-  CategoryData,
-} from "../../src/stores/category/category-types";
-import { useTransactionStore } from "../../src/stores/transaction/transaction-store";
 
 let categoryStore: ReturnType<typeof useCategoryStore>;
 
