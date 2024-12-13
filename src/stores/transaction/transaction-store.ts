@@ -1,5 +1,6 @@
 import { useCategoryStore } from "@/stores/category/category-store.ts";
 import { Category, CategoryType } from "@/stores/category/category-types.ts";
+import { transactionDataSchema } from "@/stores/transaction/transaction-schema.ts";
 import {
   Transaction,
   TransactionData,
@@ -8,7 +9,6 @@ import {
 import { defineStore } from "pinia";
 import { v4 as uuidv4 } from "uuid";
 import { computed, ref } from "vue";
-import { z } from "zod";
 
 const setupStore = () => {
   const transactions = ref<Transaction[]>([]);
@@ -57,17 +57,7 @@ const setupStore = () => {
   });
 
   const addTransaction = (transactionData: TransactionData) => {
-    const categoryStore = useCategoryStore();
-    const categoryId = transactionData.categoryId;
-    const existingCategory = categoryStore.categoryExists(categoryId);
-    if (!existingCategory) throw new Error("Category must be an existing one");
-
-    const amount = transactionData.amount;
-    if (amount <= 0) throw new Error("Amount must be greater than 0");
-
-    const date = transactionData.date;
-    z.string().date().parse(date);
-
+    transactionDataSchema.parse(transactionData);
     const transaction = { ...transactionData, id: uuidv4() };
     transactions.value.push(transaction);
   };
