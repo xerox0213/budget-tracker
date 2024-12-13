@@ -1,3 +1,4 @@
+import { categoryDataSchema } from "@/stores/category/category-schema.ts";
 import { Category, CategoryData } from "@/stores/category/category-types.ts";
 import { useTransactionStore } from "@/stores/transaction/transaction-store.ts";
 import { defineStore } from "pinia";
@@ -8,6 +9,7 @@ const setupStore = () => {
   const categories = ref<Category[]>([]);
 
   const addCategory = (categoryData: CategoryData): void => {
+    categoryDataSchema.parse(categoryData);
     const category: Category = { ...categoryData, id: uuidv4() };
     categories.value.push(category);
   };
