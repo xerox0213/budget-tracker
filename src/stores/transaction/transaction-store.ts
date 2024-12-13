@@ -8,6 +8,7 @@ import {
 import { defineStore } from "pinia";
 import { v4 as uuidv4 } from "uuid";
 import { computed, ref } from "vue";
+import { z } from "zod";
 
 const setupStore = () => {
   const transactions = ref<Transaction[]>([]);
@@ -63,6 +64,9 @@ const setupStore = () => {
 
     const amount = transactionData.amount;
     if (amount <= 0) throw new Error("Amount must be greater than 0");
+
+    const date = transactionData.date;
+    z.string().date().parse(date);
 
     const transaction = { ...transactionData, id: uuidv4() };
     transactions.value.push(transaction);
