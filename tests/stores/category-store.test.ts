@@ -45,3 +45,20 @@ describe("delete category action", () => {
     expect(categoryStore.categories).not.toContainEqual(category);
   });
 });
+
+describe("view category", () => {
+  it("should return the category", () => {
+    const categoryId = "1";
+    const category: Category = {
+      icon: "🤑",
+      id: categoryId,
+      name: "wait",
+      type: CategoryType.INCOME,
+    };
+    categoryStore.categories.push(category);
+
+    const resultCategory = categoryStore.getCategory(categoryId);
+
+    expect(resultCategory).toEqual(category);
+  });
+});
