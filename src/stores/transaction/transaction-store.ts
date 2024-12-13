@@ -1,4 +1,5 @@
 import { useCategoryStore } from "@/stores/category/category-store.ts";
+import { CategoryType } from "@/stores/category/category-types.ts";
 import {
   Transaction,
   TransactionWithCategory,
@@ -22,7 +23,21 @@ const setupStore = () => {
     return transactionsWithCategory;
   });
 
+  const incomeAmount = computed<number>(() => {
+    const categoryStore = useCategoryStore();
+    let amount = 0;
+
+    for (const transaction of transactions.value) {
+      const category = categoryStore.getCategory(transaction.categoryId);
+      if (!category || category.type != CategoryType.INCOME) continue;
+      amount += transaction.amount;
+    }
+
+    return amount;
+  });
+
   return {
+    incomeAmount,
     transactions,
     transactionsWithCategory,
   };
