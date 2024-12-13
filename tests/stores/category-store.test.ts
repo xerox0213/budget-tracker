@@ -82,3 +82,19 @@ describe("view category", () => {
     expect(resultCategory).toBeUndefined();
   });
 });
+
+describe("category exists action", () => {
+  it("should return true", () => {
+    const category: Category = {
+      icon: "🤑",
+      id: "1",
+      name: "wait",
+      type: CategoryType.INCOME,
+    };
+    categoryStore.categories.push(category);
+
+    const categoryExists = categoryStore.categoryExists(category.id);
+
+    expect(categoryExists).toBeTruthy();
+  });
+});
