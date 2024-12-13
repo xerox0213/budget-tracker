@@ -1,5 +1,5 @@
 import { useCategoryStore } from "@/stores/category/category-store.ts";
-import { CategoryType } from "@/stores/category/category-types.ts";
+import { Category, CategoryType } from "@/stores/category/category-types.ts";
 import {
   Transaction,
   TransactionData,
@@ -69,10 +69,17 @@ const setupStore = () => {
     );
   };
 
+  const deleteTransactionByCategoryId = (categoryId: Category["id"]) => {
+    transactions.value = transactions.value.filter(
+      (transaction) => transaction.categoryId !== categoryId,
+    );
+  };
+
   return {
     addTransaction,
     balanceAmount,
     deleteTransaction,
+    deleteTransactionByCategoryId,
     expenseAmount,
     incomeAmount,
     transactions,
