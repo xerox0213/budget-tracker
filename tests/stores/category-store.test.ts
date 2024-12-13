@@ -24,6 +24,16 @@ describe("add category action", () => {
 
     expect(categoryStore.categories[0]).toMatchObject(categoryData);
   });
+
+  it("should not add category if icon is not an emoji", () => {
+    const categoryData: CategoryData = {
+      icon: "lol",
+      name: "cool",
+      type: CategoryType.enum.expense,
+    };
+
+    expect(() => categoryStore.addCategory(categoryData)).toThrowError("emoji");
+  });
 });
 
 describe("delete category action", () => {
