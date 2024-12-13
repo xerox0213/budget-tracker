@@ -1,21 +1,16 @@
 import { Category } from "@/stores/category/category-types.ts";
 
-export interface Transaction extends TransactionData, TransactionId {
-  categoryId: Category["id"];
+export interface Transaction extends TransactionData {
+  id: string;
 }
 
 export interface TransactionData {
   amount: number;
+  categoryId: Category["id"];
   date: string;
   description?: string;
 }
 
-export interface TransactionWithCategory
-  extends TransactionData,
-    TransactionId {
+export interface TransactionWithCategory extends Transaction {
   category: Category;
-}
-
-interface TransactionId {
-  id: string;
 }
