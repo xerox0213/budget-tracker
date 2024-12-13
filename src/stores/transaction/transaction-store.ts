@@ -63,9 +63,16 @@ const setupStore = () => {
     transactions.value.push(transaction);
   };
 
+  const deleteTransaction = (transactionId: Transaction["id"]) => {
+    transactions.value = transactions.value.filter(
+      (transaction) => transaction.id !== transactionId,
+    );
+  };
+
   return {
     addTransaction,
     balanceAmount,
+    deleteTransaction,
     expenseAmount,
     incomeAmount,
     transactions,
