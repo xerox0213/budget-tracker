@@ -64,7 +64,7 @@ describe("delete category action", () => {
   });
 });
 
-describe("view category", () => {
+describe("get category action", () => {
   it("should return the category", () => {
     const category: Category = {
       icon: "🤑",
