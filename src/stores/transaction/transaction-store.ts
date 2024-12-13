@@ -49,7 +49,12 @@ const setupStore = () => {
     return amount;
   });
 
+  const balanceAmount = computed<number>(() => {
+    return incomeAmount.value - expenseAmount.value;
+  });
+
   return {
+    balanceAmount,
     expenseAmount,
     incomeAmount,
     transactions,
