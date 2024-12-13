@@ -61,4 +61,12 @@ describe("view category", () => {
 
     expect(resultCategory).toEqual(category);
   });
+
+  it("should return undefined", () => {
+    const categoryId = "1";
+
+    const resultCategory = categoryStore.getCategory(categoryId);
+
+    expect(resultCategory).toBeUndefined();
+  });
 });
