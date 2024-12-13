@@ -56,6 +56,11 @@ const setupStore = () => {
   });
 
   const addTransaction = (transactionData: TransactionData) => {
+    const categoryStore = useCategoryStore();
+    const categoryId = transactionData.categoryId;
+    const existingCategory = categoryStore.categoryExists(categoryId);
+    if (!existingCategory) throw new Error("Category must be an existing one");
+
     const amount = transactionData.amount;
     if (amount <= 0) throw new Error("Amount must be greater than 0");
 
