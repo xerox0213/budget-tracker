@@ -66,16 +66,15 @@ describe("delete category action", () => {
 
 describe("view category", () => {
   it("should return the category", () => {
-    const categoryId = "1";
     const category: Category = {
       icon: "🤑",
-      id: categoryId,
+      id: "1",
       name: "wait",
       type: CategoryType.enum.income,
     };
     categoryStore.categories.push(category);
 
-    const resultCategory = categoryStore.getCategory(categoryId);
+    const resultCategory = categoryStore.getCategory(category.id);
 
     expect(resultCategory).toEqual(category);
   });
