@@ -2,9 +2,11 @@ import { useCategoryStore } from "@/stores/category/category-store.ts";
 import { CategoryType } from "@/stores/category/category-types.ts";
 import {
   Transaction,
+  TransactionData,
   TransactionWithCategory,
 } from "@/stores/transaction/transaction-types.ts";
 import { defineStore } from "pinia";
+import { v4 as uuidv4 } from "uuid";
 import { computed, ref } from "vue";
 
 const setupStore = () => {
@@ -53,7 +55,16 @@ const setupStore = () => {
     return incomeAmount.value - expenseAmount.value;
   });
 
+  const addTransaction = (transactionData: TransactionData) => {
+    const amount = transactionData.amount;
+    if (amount <= 0) throw new Error("Amount must be greater than 0");
+
+    const transaction = { ...transactionData, id: uuidv4() };
+    transactions.value.push(transaction);
+  };
+
   return {
+    addTransaction,
     balanceAmount,
     expenseAmount,
     incomeAmount,
