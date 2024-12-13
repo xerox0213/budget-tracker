@@ -1,4 +1,5 @@
 import { Category, CategoryData } from "@/stores/category/category-types.ts";
+import { useTransactionStore } from "@/stores/transaction/transaction-store.ts";
 import { defineStore } from "pinia";
 import { v4 as uuidv4 } from "uuid";
 import { ref } from "vue";
@@ -12,9 +13,12 @@ const setupStore = () => {
   };
 
   const deleteCategory = (categoryId: Category["id"]): void => {
+    const transactionStore = useTransactionStore();
+
     categories.value = categories.value.filter(
       (category) => category.id !== categoryId,
     );
+    transactionStore.deleteTransactionByCategoryId(categoryId);
   };
 
   const getCategory = (categoryId: Category["id"]) =>
