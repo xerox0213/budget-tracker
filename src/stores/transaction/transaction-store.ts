@@ -36,7 +36,21 @@ const setupStore = () => {
     return amount;
   });
 
+  const expenseAmount = computed<number>(() => {
+    const categoryStore = useCategoryStore();
+    let amount = 0;
+
+    for (const transaction of transactions.value) {
+      const category = categoryStore.getCategory(transaction.categoryId);
+      if (!category || category.type != CategoryType.EXPENSE) continue;
+      amount += transaction.amount;
+    }
+
+    return amount;
+  });
+
   return {
+    expenseAmount,
     incomeAmount,
     transactions,
     transactionsWithCategory,
