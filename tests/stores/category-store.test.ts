@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { useCategoryStore } from "../../src/stores/category/category-store";
 import {
+  Category,
   CategoryData,
   CategoryType,
 } from "../../src/stores/category/category-types";
@@ -25,5 +26,22 @@ describe("add category action", () => {
     categoryStore.addCategory(categoryData);
 
     expect(categoryStore.categories[0]).toMatchObject(categoryData);
+  });
+});
+
+describe("delete category action", () => {
+  it("should delete the given category", () => {
+    const categoryId = "1";
+    const category: Category = {
+      icon: "🤑",
+      id: categoryId,
+      name: "wait",
+      type: CategoryType.INCOME,
+    };
+    categoryStore.categories.push(category);
+
+    categoryStore.deleteCategory(categoryId);
+
+    expect(categoryStore.categories).not.toContainEqual(category);
   });
 });
