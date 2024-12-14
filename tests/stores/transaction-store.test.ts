@@ -162,4 +162,10 @@ describe("computed properties", () => {
       expect(transactionStore.incomeAmount).toBe(25);
     });
   });
+
+  describe("expense amount computed property", () => {
+    it("should compute 100", () => {
+      expect(transactionStore.expenseAmount).toBe(100);
+    });
+  });
 });
