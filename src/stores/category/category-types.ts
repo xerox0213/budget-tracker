@@ -5,8 +5,8 @@ import {
 import { z } from "zod";
 
 export interface Category extends CategoryData {
-  categoryType: z.infer<typeof CategoryType>;
   id: string;
+  type: z.infer<typeof CategoryType>;
 }
 
 export type CategoryData = z.infer<typeof categoryDataSchema>;

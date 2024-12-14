@@ -32,10 +32,10 @@ beforeEach(() => {
   incomeCategories = [];
   for (let index = 0; index < 5; index++) {
     const incomeCategory: Category = {
-      categoryType: CategoryType.enum.income,
       icon: "😍",
       id: uuidv4(),
       name: "enfant du monde",
+      type: CategoryType.enum.income,
     };
     categoryStore.categories.push(incomeCategory);
     incomeCategories.push(incomeCategory);
@@ -44,10 +44,10 @@ beforeEach(() => {
   expenseCategories = [];
   for (let index = 0; index < 5; index++) {
     const expenseCategory: Category = {
-      categoryType: CategoryType.enum.expense,
       icon: "😍",
       id: uuidv4(),
       name: "last dance",
+      type: CategoryType.enum.expense,
     };
     categoryStore.categories.push(expenseCategory);
     expenseCategories.push(expenseCategory);
@@ -60,7 +60,7 @@ describe("add income category action", () => {
 
     const expected = {
       ...categoryData,
-      categoryType: CategoryType.enum.income,
+      type: CategoryType.enum.income,
     };
 
     expect(categoryStore.categories).toEqual(
@@ -83,7 +83,7 @@ describe("add expense category action", () => {
 
     const expected = {
       ...categoryData,
-      categoryType: CategoryType.enum.expense,
+      type: CategoryType.enum.expense,
     };
     expect(categoryStore.categories).toEqual(
       expect.arrayContaining([expect.objectContaining(expected)]),

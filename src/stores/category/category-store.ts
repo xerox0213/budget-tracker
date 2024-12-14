@@ -13,13 +13,13 @@ const setupStore = () => {
 
   const incomeCategories = computed<Category[]>(() => {
     return categories.value.filter(
-      (category) => category.categoryType === CategoryType.enum.income,
+      (category) => category.type === CategoryType.enum.income,
     );
   });
 
   const expenseCategories = computed<Category[]>(() => {
     return categories.value.filter(
-      (category) => category.categoryType === CategoryType.enum.expense,
+      (category) => category.type === CategoryType.enum.expense,
     );
   });
 
@@ -27,8 +27,8 @@ const setupStore = () => {
     categoryDataSchema.parse(categoryData);
     const category: Category = {
       ...categoryData,
-      categoryType: CategoryType.enum.income,
       id: uuidv4(),
+      type: CategoryType.enum.income,
     };
     categories.value.push(category);
   };
@@ -37,8 +37,8 @@ const setupStore = () => {
     categoryDataSchema.parse(categoryData);
     const category: Category = {
       ...categoryData,
-      categoryType: CategoryType.enum.expense,
       id: uuidv4(),
+      type: CategoryType.enum.expense,
     };
     categories.value.push(category);
   };
