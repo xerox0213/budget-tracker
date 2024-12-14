@@ -82,3 +82,11 @@ describe("get category action", () => {
     expect(category).toBeUndefined();
   });
 });
+
+describe("category exists action", () => {
+  it("should return true", () => {
+    const exists = categoryStore.categoryExists(expenseCategory.id);
+
+    expect(exists).toBeTruthy();
+  });
+});
