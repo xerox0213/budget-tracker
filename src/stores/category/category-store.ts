@@ -6,10 +6,16 @@ import { Category, CategoryData } from "@/stores/category/category-types.ts";
 import { useTransactionStore } from "@/stores/transaction/transaction-store.ts";
 import { defineStore } from "pinia";
 import { v4 as uuidv4 } from "uuid";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 const setupStore = () => {
   const categories = ref<Category[]>([]);
+
+  const incomeCategories = computed<Category[]>(() => {
+    return categories.value.filter(
+      (category) => category.categoryType === CategoryType.enum.income,
+    );
+  });
 
   const addIncomeCategory = (categoryData: CategoryData) => {
     categoryDataSchema.parse(categoryData);
@@ -53,6 +59,7 @@ const setupStore = () => {
     categoryExists,
     deleteCategory,
     getCategory,
+    incomeCategories,
   };
 };
 
