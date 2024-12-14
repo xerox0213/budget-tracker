@@ -152,3 +152,9 @@ describe("income categories computed property", () => {
     expect(categoryStore.incomeCategories).toMatchObject(incomeCategories);
   });
 });
+
+describe("expense categories computed property", () => {
+  it("should success", () => {
+    expect(categoryStore.expenseCategories).toMatchObject(expenseCategories);
+  });
+});
