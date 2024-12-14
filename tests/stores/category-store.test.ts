@@ -28,4 +28,12 @@ describe("add income category action", () => {
 
     expect(result).toMatchObject(expected);
   });
+
+  it("should not add new income category if its icon is not an emoji", () => {
+    categoryData.icon = "emoji";
+
+    expect(() => categoryStore.addIncomeCategory(categoryData)).toThrowError(
+      "emoji",
+    );
+  });
 });
