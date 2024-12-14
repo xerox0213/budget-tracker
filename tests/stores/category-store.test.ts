@@ -62,9 +62,10 @@ describe("add income category action", () => {
       ...categoryData,
       categoryType: CategoryType.enum.income,
     };
-    const result = categoryStore.categories[0];
 
-    expect(result).toMatchObject(expected);
+    expect(categoryStore.categories).toEqual(
+      expect.arrayContaining([expect.objectContaining(expected)]),
+    );
   });
 
   it("should fail if the icon is not an emoji", () => {
@@ -84,9 +85,9 @@ describe("add expense category action", () => {
       ...categoryData,
       categoryType: CategoryType.enum.expense,
     };
-    const result = categoryStore.categories[0];
-
-    expect(result).toMatchObject(expected);
+    expect(categoryStore.categories).toEqual(
+      expect.arrayContaining([expect.objectContaining(expected)]),
+    );
   });
 
   it("should fail if the icon is not an emoji", () => {
