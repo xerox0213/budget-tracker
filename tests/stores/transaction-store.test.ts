@@ -1,6 +1,9 @@
 import { useCategoryStore } from "@/stores/category/category-store.ts";
 import { useTransactionStore } from "@/stores/transaction/transaction-store.ts";
-import { TransactionData } from "@/stores/transaction/transaction-types.ts";
+import {
+  Transaction,
+  TransactionData,
+} from "@/stores/transaction/transaction-types.ts";
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, it, MockInstance, vi } from "vitest";
 
@@ -64,5 +67,25 @@ describe("add transaction action", () => {
     const callback = () => transactionStore.addTransaction(transactionData);
 
     expect(callback).toThrowError("categoryId");
+  });
+});
+
+describe("delete transaction action", () => {
+  let transaction: Transaction;
+
+  beforeEach(() => {
+    transaction = {
+      amount: 22,
+      categoryId: "1",
+      date: "2024-14-12",
+      id: "1",
+    };
+    transactionStore.transactions.push(transaction);
+  });
+
+  it("should delete the transaction", () => {
+    transactionStore.deleteTransaction(transaction.id);
+
+    expect(transactionStore.transactions).not.toContain(transaction);
   });
 });
