@@ -1,17 +1,28 @@
 import { CategoryType } from "@/stores/category/category-schema.ts";
 import { useCategoryStore } from "@/stores/category/category-store.ts";
 import { Category, CategoryData } from "@/stores/category/category-types.ts";
+import { useTransactionStore } from "@/stores/transaction/transaction-store.ts";
 import { createPinia, setActivePinia } from "pinia";
 import { v4 as uuidv4 } from "uuid";
-import { beforeEach, describe, expect, it } from "vitest";
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  MockInstance,
+  vi,
+} from "vitest";
 
 let categoryStore: ReturnType<typeof useCategoryStore>;
+let transactionStore: ReturnType<typeof useTransactionStore>;
 let categoryData: CategoryData;
 let expenseCategory: Category;
 
 beforeEach(() => {
   setActivePinia(createPinia());
   categoryStore = useCategoryStore();
+  transactionStore = useTransactionStore();
   categoryData = {
     icon: "😊",
     name: "wow",
@@ -94,5 +105,25 @@ describe("category exists action", () => {
     const exists = categoryStore.categoryExists("1");
 
     expect(exists).toBeFalsy();
+  });
+});
+
+describe("delete category action", () => {
+  let spy: MockInstance<typeof transactionStore.deleteTransactionByCategoryId>;
+
+  beforeEach(() => {
+    spy = vi.spyOn(transactionStore, "deleteTransactionByCategoryId");
+    spy.mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    spy.mockRestore();
+  });
+
+  it("should success", () => {
+    categoryStore.deleteCategory(expenseCategory.id);
+
+    expect(spy).toHaveBeenCalledOnce();
+    expect(categoryStore.categories).not.toContainEqual(expenseCategory);
   });
 });
