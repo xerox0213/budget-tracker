@@ -89,4 +89,10 @@ describe("category exists action", () => {
 
     expect(exists).toBeTruthy();
   });
+
+  it("should return false", () => {
+    const exists = categoryStore.categoryExists("1");
+
+    expect(exists).toBeFalsy();
+  });
 });
