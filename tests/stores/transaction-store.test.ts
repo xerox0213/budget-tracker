@@ -34,4 +34,14 @@ describe("add transaction action", () => {
 
     expect(transactionStore.transactions[0]).toMatchObject(transactionData);
   });
+
+  it("should not add a new transaction if amount < 0", () => {
+    transactionData.amount = -22;
+    const spy = vi.spyOn(categoryStore, "categoryExists");
+    spy.mockReturnValue(true);
+
+    const callback = () => transactionStore.addTransaction(transactionData);
+
+    expect(callback).toThrowError("amount");
+  });
 });
