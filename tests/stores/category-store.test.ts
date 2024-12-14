@@ -75,4 +75,10 @@ describe("get category action", () => {
 
     expect(category).toEqual(expenseCategory);
   });
+
+  it("should return undefined", () => {
+    const category = categoryStore.getCategory("1");
+
+    expect(category).toBeUndefined();
+  });
 });
