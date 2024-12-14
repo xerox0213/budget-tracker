@@ -1,8 +1,11 @@
+import { CategoryType } from "@/stores/category/category-schema.ts";
 import { useCategoryStore } from "@/stores/category/category-store.ts";
+import { Category } from "@/stores/category/category-types.ts";
 import { useTransactionStore } from "@/stores/transaction/transaction-store.ts";
 import {
   Transaction,
   TransactionData,
+  TransactionWithCategory,
 } from "@/stores/transaction/transaction-types.ts";
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, it, MockInstance, vi } from "vitest";
@@ -92,5 +95,65 @@ describe("delete transaction by category id action", () => {
     transactionStore.deleteTransactionByCategoryId(transaction.categoryId);
 
     expect(transactionStore.transactions).not.toContain(transaction);
+  });
+});
+
+describe("computed properties", () => {
+  let incomeCategory: Category;
+  let expenseCategory: Category;
+  let spyGetCategory: MockInstance<typeof categoryStore.getCategory>;
+  let transactionsWithCategory: TransactionWithCategory[];
+
+  beforeEach(() => {
+    incomeCategory = {
+      icon: "🤑",
+      id: "1",
+      name: "incomes",
+      type: CategoryType.enum.income,
+    };
+
+    expenseCategory = {
+      icon: "😠",
+      id: "2",
+      name: "expenses",
+      type: CategoryType.enum.expense,
+    };
+
+    transactionsWithCategory = [];
+
+    for (let index = 0; index < 5; index++) {
+      const incomeTransaction: Transaction = {
+        amount: 5,
+        categoryId: incomeCategory.id,
+        date: "2024-12-14",
+        id: `${index}`,
+      };
+      transactionStore.transactions.push(incomeTransaction);
+      transactionsWithCategory.push({
+        ...incomeTransaction,
+        category: incomeCategory,
+      });
+    }
+
+    for (let index = 0; index < 5; index++) {
+      const expenseTransaction: Transaction = {
+        amount: 20,
+        categoryId: expenseCategory.id,
+        date: "2024-12-14",
+        id: `${index}`,
+      };
+      transactionStore.transactions.push(expenseTransaction);
+      transactionsWithCategory.push({
+        ...expenseTransaction,
+        category: expenseCategory,
+      });
+    }
+
+    spyGetCategory = vi.spyOn(useCategoryStore(), "getCategory");
+
+    spyGetCategory.mockImplementation((categoryId) => {
+      if (categoryId === incomeCategory.id) return incomeCategory;
+      else if (categoryId === expenseCategory.id) return expenseCategory;
+    });
   });
 });
