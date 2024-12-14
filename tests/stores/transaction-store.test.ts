@@ -15,6 +15,7 @@ beforeEach(() => {
 
 describe("add transaction action", () => {
   let transactionData: TransactionData;
+  let spyCategoryExists: MockInstance<typeof categoryStore.categoryExists>;
 
   beforeEach(() => {
     transactionData = {
@@ -23,13 +24,11 @@ describe("add transaction action", () => {
       date: "2024-12-14",
       description: "ok",
     };
-    vi.restoreAllMocks();
+    spyCategoryExists = vi.spyOn(categoryStore, "categoryExists");
+    spyCategoryExists.mockReturnValue(true);
   });
 
   it("should add the transaction", () => {
-    const spy = vi.spyOn(categoryStore, "categoryExists");
-    spy.mockReturnValue(true);
-
     transactionStore.addTransaction(transactionData);
 
     expect(transactionStore.transactions[0]).toMatchObject(transactionData);
@@ -37,8 +36,6 @@ describe("add transaction action", () => {
 
   it("should not add a new transaction if amount < 0", () => {
     transactionData.amount = -22;
-    const spy = vi.spyOn(categoryStore, "categoryExists");
-    spy.mockReturnValue(true);
 
     const callback = () => transactionStore.addTransaction(transactionData);
 
@@ -47,8 +44,6 @@ describe("add transaction action", () => {
 
   it("should not add a new transaction if amount = 0", () => {
     transactionData.amount = 0;
-    const spy = vi.spyOn(categoryStore, "categoryExists");
-    spy.mockReturnValue(true);
 
     const callback = () => transactionStore.addTransaction(transactionData);
 
@@ -57,8 +52,6 @@ describe("add transaction action", () => {
 
   it("should not add a new transaction if date is not in the yyyy-mm-dd format", () => {
     transactionData.date = "14-12-2024";
-    const spy = vi.spyOn(categoryStore, "categoryExists");
-    spy.mockReturnValue(true);
 
     const callback = () => transactionStore.addTransaction(transactionData);
 
@@ -66,8 +59,7 @@ describe("add transaction action", () => {
   });
 
   it("should not add a new transaction if the category does not exist", () => {
-    const spy = vi.spyOn(categoryStore, "categoryExists");
-    spy.mockReturnValue(false);
+    spyCategoryExists.mockReturnValueOnce(false);
 
     const callback = () => transactionStore.addTransaction(transactionData);
 
