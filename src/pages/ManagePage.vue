@@ -1,7 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import ManageRibbon from "@/components/page-ribbons/ManageRibbon.vue";
+</script>
 
 <template>
-  <h1>MANAGE PAGE</h1>
+  <ManageRibbon />
 </template>
 
 <style scoped></style>
