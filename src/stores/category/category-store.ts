@@ -17,6 +17,12 @@ const setupStore = () => {
     );
   });
 
+  const expenseCategories = computed<Category[]>(() => {
+    return categories.value.filter(
+      (category) => category.categoryType === CategoryType.enum.expense,
+    );
+  });
+
   const addIncomeCategory = (categoryData: CategoryData) => {
     categoryDataSchema.parse(categoryData);
     const category: Category = {
@@ -58,6 +64,7 @@ const setupStore = () => {
     categories,
     categoryExists,
     deleteCategory,
+    expenseCategories,
     getCategory,
     incomeCategories,
   };
