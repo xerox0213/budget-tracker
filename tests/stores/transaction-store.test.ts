@@ -156,4 +156,10 @@ describe("computed properties", () => {
       else if (categoryId === expenseCategory.id) return expenseCategory;
     });
   });
+
+  describe("income amount computed property", () => {
+    it("should compute 25", () => {
+      expect(transactionStore.incomeAmount).toBe(25);
+    });
+  });
 });
