@@ -17,7 +17,7 @@ beforeEach(() => {
 });
 
 describe("add income category action", () => {
-  it("should add new income category", () => {
+  it("should success", () => {
     categoryStore.addIncomeCategory(categoryData);
 
     const expected = {
@@ -29,7 +29,7 @@ describe("add income category action", () => {
     expect(result).toMatchObject(expected);
   });
 
-  it("should not add new income category if its icon is not an emoji", () => {
+  it("should fail if the icon is not an emoji", () => {
     categoryData.icon = "emoji";
 
     expect(() => categoryStore.addIncomeCategory(categoryData)).toThrowError(
@@ -39,7 +39,7 @@ describe("add income category action", () => {
 });
 
 describe("add expense category action", () => {
-  it("should add new expense category", () => {
+  it("should success", () => {
     categoryStore.addExpenseCategory(categoryData);
 
     const expected = {
@@ -51,7 +51,7 @@ describe("add expense category action", () => {
     expect(result).toMatchObject(expected);
   });
 
-  it("should not add new expense category if its icon is not an emoji", () => {
+  it("should fail if the icon is not an emoji", () => {
     categoryData.icon = "emoji";
 
     expect(() => categoryStore.addExpenseCategory(categoryData)).toThrowError(
