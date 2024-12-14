@@ -1,4 +1,7 @@
-import { categoryDataSchema } from "@/stores/category/category-schema.ts";
+import {
+  categoryDataSchema,
+  CategoryType,
+} from "@/stores/category/category-schema.ts";
 import { Category, CategoryData } from "@/stores/category/category-types.ts";
 import { useTransactionStore } from "@/stores/transaction/transaction-store.ts";
 import { defineStore } from "pinia";
@@ -8,9 +11,23 @@ import { ref } from "vue";
 const setupStore = () => {
   const categories = ref<Category[]>([]);
 
-  const addCategory = (categoryData: CategoryData): void => {
+  const addIncomeCategory = (categoryData: CategoryData) => {
     categoryDataSchema.parse(categoryData);
-    const category: Category = { ...categoryData, id: uuidv4() };
+    const category: Category = {
+      ...categoryData,
+      categoryType: CategoryType.enum.income,
+      id: uuidv4(),
+    };
+    categories.value.push(category);
+  };
+
+  const addExpenseCategory = (categoryData: CategoryData) => {
+    categoryDataSchema.parse(categoryData);
+    const category: Category = {
+      ...categoryData,
+      categoryType: CategoryType.enum.expense,
+      id: uuidv4(),
+    };
     categories.value.push(category);
   };
 
@@ -30,7 +47,8 @@ const setupStore = () => {
     getCategory(categoryId) != undefined;
 
   return {
-    addCategory,
+    addExpenseCategory,
+    addIncomeCategory,
     categories,
     categoryExists,
     deleteCategory,
