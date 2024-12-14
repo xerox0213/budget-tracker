@@ -9,24 +9,29 @@ import { beforeEach, describe, expect, it, MockInstance, vi } from "vitest";
 
 let transactionStore: ReturnType<typeof useTransactionStore>;
 let categoryStore: ReturnType<typeof useCategoryStore>;
+let transactionData: TransactionData;
+let transaction: Transaction;
 
 beforeEach(() => {
+  transactionData = {
+    amount: 22,
+    categoryId: "1",
+    date: "2024-12-14",
+    description: "ok",
+  };
+  transaction = {
+    ...transactionData,
+    id: "1",
+  };
   setActivePinia(createPinia());
   transactionStore = useTransactionStore();
   categoryStore = useCategoryStore();
 });
 
 describe("add transaction action", () => {
-  let transactionData: TransactionData;
   let spyCategoryExists: MockInstance<typeof categoryStore.categoryExists>;
 
   beforeEach(() => {
-    transactionData = {
-      amount: 22,
-      categoryId: "1",
-      date: "2024-12-14",
-      description: "ok",
-    };
     spyCategoryExists = vi.spyOn(categoryStore, "categoryExists");
     spyCategoryExists.mockReturnValue(true);
   });
@@ -71,19 +76,9 @@ describe("add transaction action", () => {
 });
 
 describe("delete transaction action", () => {
-  let transaction: Transaction;
-
-  beforeEach(() => {
-    transaction = {
-      amount: 22,
-      categoryId: "1",
-      date: "2024-14-12",
-      id: "1",
-    };
-    transactionStore.transactions.push(transaction);
-  });
-
   it("should delete the transaction", () => {
+    transactionStore.transactions.push(transaction);
+
     transactionStore.deleteTransaction(transaction.id);
 
     expect(transactionStore.transactions).not.toContain(transaction);
@@ -91,19 +86,9 @@ describe("delete transaction action", () => {
 });
 
 describe("delete transaction by category id action", () => {
-  let transaction: Transaction;
-
-  beforeEach(() => {
-    transaction = {
-      amount: 22,
-      categoryId: "1",
-      date: "2024-14-12",
-      id: "1",
-    };
-    transactionStore.transactions.push(transaction);
-  });
-
   it("should delete the transaction", () => {
+    transactionStore.transactions.push(transaction);
+
     transactionStore.deleteTransactionByCategoryId(transaction.categoryId);
 
     expect(transactionStore.transactions).not.toContain(transaction);
