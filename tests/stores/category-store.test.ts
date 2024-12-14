@@ -37,3 +37,17 @@ describe("add income category action", () => {
     );
   });
 });
+
+describe("add expense category action", () => {
+  it("should add new expense category", () => {
+    categoryStore.addExpenseCategory(categoryData);
+
+    const expected = {
+      ...categoryData,
+      categoryType: CategoryType.enum.expense,
+    };
+    const result = categoryStore.categories[0];
+
+    expect(result).toMatchObject(expected);
+  });
+});
