@@ -54,4 +54,14 @@ describe("add transaction action", () => {
 
     expect(callback).toThrowError("amount");
   });
+
+  it("should not add a new transaction if date is not in the yyyy-mm-dd format", () => {
+    transactionData.date = "14-12-2024";
+    const spy = vi.spyOn(categoryStore, "categoryExists");
+    spy.mockReturnValue(true);
+
+    const callback = () => transactionStore.addTransaction(transactionData);
+
+    expect(callback).toThrowError("date");
+  });
 });
