@@ -17,7 +17,8 @@ import {
 let categoryStore: ReturnType<typeof useCategoryStore>;
 let transactionStore: ReturnType<typeof useTransactionStore>;
 let categoryData: CategoryData;
-let expenseCategory: Category;
+let expenseCategories: Category[];
+let incomeCategories: Category[];
 
 beforeEach(() => {
   setActivePinia(createPinia());
@@ -27,13 +28,30 @@ beforeEach(() => {
     icon: "😊",
     name: "wow",
   };
-  expenseCategory = {
-    categoryType: CategoryType.enum.expense,
-    icon: "😠",
-    id: uuidv4(),
-    name: "expenses",
-  };
-  categoryStore.categories.push(expenseCategory);
+
+  incomeCategories = [];
+  for (let index = 0; index < 5; index++) {
+    const incomeCategory: Category = {
+      categoryType: CategoryType.enum.income,
+      icon: "😍",
+      id: uuidv4(),
+      name: "enfant du monde",
+    };
+    categoryStore.categories.push(incomeCategory);
+    incomeCategories.push(incomeCategory);
+  }
+
+  expenseCategories = [];
+  for (let index = 0; index < 5; index++) {
+    const expenseCategory: Category = {
+      categoryType: CategoryType.enum.expense,
+      icon: "😍",
+      id: uuidv4(),
+      name: "last dance",
+    };
+    categoryStore.categories.push(expenseCategory);
+    expenseCategories.push(expenseCategory);
+  }
 });
 
 describe("add income category action", () => {
@@ -82,9 +100,9 @@ describe("add expense category action", () => {
 
 describe("get category action", () => {
   it("should return the category", () => {
-    const category = categoryStore.getCategory(expenseCategory.id);
+    const category = categoryStore.getCategory(incomeCategories[0].id);
 
-    expect(category).toEqual(expenseCategory);
+    expect(category).toEqual(incomeCategories[0]);
   });
 
   it("should return undefined", () => {
@@ -96,7 +114,7 @@ describe("get category action", () => {
 
 describe("category exists action", () => {
   it("should return true", () => {
-    const exists = categoryStore.categoryExists(expenseCategory.id);
+    const exists = categoryStore.categoryExists(expenseCategories[0].id);
 
     expect(exists).toBeTruthy();
   });
@@ -121,9 +139,9 @@ describe("delete category action", () => {
   });
 
   it("should success", () => {
-    categoryStore.deleteCategory(expenseCategory.id);
+    categoryStore.deleteCategory(expenseCategories[0].id);
 
     expect(spy).toHaveBeenCalledOnce();
-    expect(categoryStore.categories).not.toContainEqual(expenseCategory);
+    expect(categoryStore.categories).not.toContainEqual(expenseCategories[0]);
   });
 });
