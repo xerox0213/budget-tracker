@@ -168,4 +168,13 @@ describe("computed properties", () => {
       expect(transactionStore.expenseAmount).toBe(100);
     });
   });
+
+  describe("transactions with category computed property", () => {
+    it("should compute each transaction with its category", () => {
+      const result = JSON.stringify(transactionStore.transactionsWithCategory);
+      const expected = JSON.stringify(transactionsWithCategory);
+
+      expect(result).toEqual(expected);
+    });
+  });
 });
