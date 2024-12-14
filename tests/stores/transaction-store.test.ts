@@ -89,3 +89,23 @@ describe("delete transaction action", () => {
     expect(transactionStore.transactions).not.toContain(transaction);
   });
 });
+
+describe("delete transaction by category id action", () => {
+  let transaction: Transaction;
+
+  beforeEach(() => {
+    transaction = {
+      amount: 22,
+      categoryId: "1",
+      date: "2024-14-12",
+      id: "1",
+    };
+    transactionStore.transactions.push(transaction);
+  });
+
+  it("should delete the transaction", () => {
+    transactionStore.deleteTransactionByCategoryId(transaction.categoryId);
+
+    expect(transactionStore.transactions).not.toContain(transaction);
+  });
+});
