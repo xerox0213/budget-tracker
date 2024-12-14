@@ -2,7 +2,7 @@ import { useCategoryStore } from "@/stores/category/category-store.ts";
 import { useTransactionStore } from "@/stores/transaction/transaction-store.ts";
 import { TransactionData } from "@/stores/transaction/transaction-types.ts";
 import { createPinia, setActivePinia } from "pinia";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, MockInstance, vi } from "vitest";
 
 let transactionStore: ReturnType<typeof useTransactionStore>;
 let categoryStore: ReturnType<typeof useCategoryStore>;
@@ -63,5 +63,14 @@ describe("add transaction action", () => {
     const callback = () => transactionStore.addTransaction(transactionData);
 
     expect(callback).toThrowError("date");
+  });
+
+  it("should not add a new transaction if the category does not exist", () => {
+    const spy = vi.spyOn(categoryStore, "categoryExists");
+    spy.mockReturnValue(false);
+
+    const callback = () => transactionStore.addTransaction(transactionData);
+
+    expect(callback).toThrowError("categoryId");
   });
 });
