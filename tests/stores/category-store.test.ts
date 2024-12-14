@@ -146,3 +146,9 @@ describe("delete category action", () => {
     expect(categoryStore.categories).not.toContainEqual(expenseCategories[0]);
   });
 });
+
+describe("income categories computed property", () => {
+  it("should success", () => {
+    expect(categoryStore.incomeCategories).toMatchObject(incomeCategories);
+  });
+});
