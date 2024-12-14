@@ -68,3 +68,11 @@ describe("add expense category action", () => {
     );
   });
 });
+
+describe("get category action", () => {
+  it("should return the category", () => {
+    const category = categoryStore.getCategory(expenseCategory.id);
+
+    expect(category).toEqual(expenseCategory);
+  });
+});
