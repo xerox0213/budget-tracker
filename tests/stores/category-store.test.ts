@@ -1,11 +1,13 @@
 import { CategoryType } from "@/stores/category/category-schema.ts";
 import { useCategoryStore } from "@/stores/category/category-store.ts";
-import { CategoryData } from "@/stores/category/category-types.ts";
+import { Category, CategoryData } from "@/stores/category/category-types.ts";
 import { createPinia, setActivePinia } from "pinia";
+import { v4 as uuidv4 } from "uuid";
 import { beforeEach, describe, expect, it } from "vitest";
 
 let categoryStore: ReturnType<typeof useCategoryStore>;
 let categoryData: CategoryData;
+let expenseCategory: Category;
 
 beforeEach(() => {
   setActivePinia(createPinia());
@@ -14,6 +16,13 @@ beforeEach(() => {
     icon: "😊",
     name: "wow",
   };
+  expenseCategory = {
+    categoryType: CategoryType.enum.expense,
+    icon: "😠",
+    id: uuidv4(),
+    name: "expenses",
+  };
+  categoryStore.categories.push(expenseCategory);
 });
 
 describe("add income category action", () => {
