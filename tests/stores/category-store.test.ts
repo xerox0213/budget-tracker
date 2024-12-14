@@ -50,4 +50,12 @@ describe("add expense category action", () => {
 
     expect(result).toMatchObject(expected);
   });
+
+  it("should not add new expense category if its icon is not an emoji", () => {
+    categoryData.icon = "emoji";
+
+    expect(() => categoryStore.addExpenseCategory(categoryData)).toThrowError(
+      "emoji",
+    );
+  });
 });
