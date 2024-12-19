@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import CategoryCard from "@/components/CategoryCard.vue";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { CategoryType } from "@/stores/category/category-schema.ts";
 import { Category } from "@/stores/category/category-types.ts";
-import { SquarePlus, TrendingDown, TrendingUp } from "lucide-vue-next";
+import { TrendingDown, TrendingUp } from "lucide-vue-next";
 import { computed } from "vue";
 import { z } from "zod";
 
@@ -45,10 +44,7 @@ const categoriesSortedByName = computed<Category[]>(() => {
           <CardDescription>Sorted by name</CardDescription>
         </div>
       </div>
-      <Button>
-        <SquarePlus />
-        Create category
-      </Button>
+      <slot name="add-category-dialog" />
     </CardHeader>
     <CardContent
       class="grid grid-cols-[repeat(auto-fill,_minmax(250px,_1fr))] gap-2 p-3"
