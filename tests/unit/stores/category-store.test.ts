@@ -50,4 +50,16 @@ describe("store category action", () => {
       "icon",
     );
   });
+
+  it("should fail if the category type is invalid", () => {
+    const invalidCategoryData: CategoryData = {
+      name: "matrix",
+      icon: "🕶️",
+      categoryType: "neo",
+    };
+
+    expect(() => categoryStore.storeCategory(invalidCategoryData)).toThrowError(
+      "categoryType",
+    );
+  });
 });
