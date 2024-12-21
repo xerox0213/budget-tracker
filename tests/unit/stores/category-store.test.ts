@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { categoryTypeEnum } from "../../../src/schemas/category-schema";
 import { useCategoryStore } from "../../../src/stores/category-store";
-import { CategoryData } from "../../../src/types/category-type";
+import { Category, CategoryData } from "../../../src/types/category-type";
 
 let categoryStore: ReturnType<typeof useCategoryStore>;
 
@@ -58,5 +58,21 @@ describe("store action", () => {
     expect(() => categoryStore.store(invalidCategoryData)).toThrowError(
       "categoryType",
     );
+  });
+});
+
+describe("view action", () => {
+  it("should return the category", () => {
+    const category: Category = {
+      id: "1",
+      name: "matrix",
+      icon: "🕶️",
+      categoryType: categoryTypeEnum.enum.income,
+    };
+    categoryStore.categories.push(category);
+
+    const viewedCategory = categoryStore.view(category.id);
+
+    expect(viewedCategory).toEqual(category);
   });
 });
