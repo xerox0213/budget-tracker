@@ -67,4 +67,16 @@ describe("store action", () => {
       "date",
     );
   });
+
+  it("should fail if the category does not exist", () => {
+    const invalidTransactionData: TransactionData = {
+      amount: 23,
+      date: "2024-12-21",
+      categoryId: "232",
+    };
+
+    expect(() => transactionStore.store(invalidTransactionData)).toThrow(
+      "categoryId",
+    );
+  });
 });
