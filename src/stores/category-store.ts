@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { ref } from "vue";
 
 import { categoryDataSchema } from "@/schemas/category-schema.ts";
+import { useTransactionStore } from "@/stores/transaction-store.ts";
 import type { Category, CategoryData } from "@/types/category-type.ts";
 
 const setup = () => {
@@ -21,10 +22,19 @@ const setup = () => {
     );
   };
 
+  const destroy = (categoryId: Category["id"]) => {
+    categories.value = categories.value.filter(
+      (category) => category.id !== categoryId,
+    );
+    const transactionStore = useTransactionStore();
+    transactionStore.destroyByCategoryId(categoryId);
+  };
+
   return {
     categories,
     store,
     view,
+    destroy,
   };
 };
 
