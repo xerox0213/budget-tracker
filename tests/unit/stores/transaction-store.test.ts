@@ -99,3 +99,21 @@ describe("destroy action", () => {
     expect(transactionStore.transactions).not.toContainEqual(transaction);
   });
 });
+
+describe("destroy by category id action", () => {
+  it("should succeed", () => {
+    const categoryId = "1";
+    for (let i = 0; i < 3; i++) {
+      transactionStore.transactions.push({
+        id: `${i}`,
+        amount: 22,
+        categoryId,
+        date: "2024-12-21",
+      });
+    }
+
+    transactionStore.destroyByCategoryId(categoryId);
+
+    expect(transactionStore.transactions).toHaveLength(0);
+  });
+});
