@@ -26,4 +26,16 @@ describe("store category action", () => {
       expect.arrayContaining([expect.objectContaining(validCategoryData)]),
     );
   });
+
+  it("should fail if the name has not a mini of 3 chars", () => {
+    const invalidCategoryData: CategoryData = {
+      name: "ma",
+      icon: "🕶️",
+      categoryType: "income",
+    };
+
+    expect(() => categoryStore.storeCategory(invalidCategoryData)).toThrowError(
+      "name",
+    );
+  });
 });
