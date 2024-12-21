@@ -5,7 +5,10 @@ import { categoryTypeEnum } from "../../../src/schemas/category-schema";
 import { useCategoryStore } from "../../../src/stores/category-store";
 import { useTransactionStore } from "../../../src/stores/transaction-store";
 import { Category } from "../../../src/types/category-type";
-import { TransactionData } from "../../../src/types/transaction-type";
+import {
+  Transaction,
+  TransactionData,
+} from "../../../src/types/transaction-type";
 
 let transactionStore: ReturnType<typeof useTransactionStore>;
 let categoryStore: ReturnType<typeof useCategoryStore>;
@@ -78,5 +81,21 @@ describe("store action", () => {
     expect(() => transactionStore.store(invalidTransactionData)).toThrow(
       "categoryId",
     );
+  });
+});
+
+describe("destroy action", () => {
+  it("should succeed", () => {
+    const transaction: Transaction = {
+      id: "1",
+      amount: 33,
+      date: "2024-12-21",
+      categoryId: "1",
+    };
+    transactionStore.transactions.push(transaction);
+
+    transactionStore.destroy(transaction.id);
+
+    expect(transactionStore.transactions).not.toContainEqual(transaction);
   });
 });
