@@ -12,7 +12,7 @@ beforeEach(() => {
   categoryStore = useCategoryStore();
 });
 
-describe("store category action", () => {
+describe("store action", () => {
   it("should succeed", () => {
     const validCategoryData = {
       name: "matrix",
@@ -20,7 +20,7 @@ describe("store category action", () => {
       categoryType: categoryTypeEnum.enum.income,
     };
 
-    const storedCategory = categoryStore.storeCategory(validCategoryData);
+    const storedCategory = categoryStore.store(validCategoryData);
 
     expect(storedCategory).toMatchObject(validCategoryData);
     expect(categoryStore.categories).toEqual(
@@ -35,9 +35,7 @@ describe("store category action", () => {
       categoryType: categoryTypeEnum.enum.expense,
     };
 
-    expect(() => categoryStore.storeCategory(invalidCategoryData)).toThrowError(
-      "name",
-    );
+    expect(() => categoryStore.store(invalidCategoryData)).toThrowError("name");
   });
 
   it("should fail if the icon is not an emoji", () => {
@@ -47,9 +45,7 @@ describe("store category action", () => {
       categoryType: categoryTypeEnum.enum.income,
     };
 
-    expect(() => categoryStore.storeCategory(invalidCategoryData)).toThrowError(
-      "icon",
-    );
+    expect(() => categoryStore.store(invalidCategoryData)).toThrowError("icon");
   });
 
   it("should fail if the category type is invalid", () => {
@@ -59,7 +55,7 @@ describe("store category action", () => {
       categoryType: "neo",
     };
 
-    expect(() => categoryStore.storeCategory(invalidCategoryData)).toThrowError(
+    expect(() => categoryStore.store(invalidCategoryData)).toThrowError(
       "categoryType",
     );
   });

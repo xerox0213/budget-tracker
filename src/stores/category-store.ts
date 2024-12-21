@@ -8,7 +8,7 @@ import type { Category, CategoryData } from "@/types/category-type.ts";
 const setup = () => {
   const categories = ref<Category[]>([]);
 
-  const storeCategory = (categoryData: CategoryData) => {
+  const store = (categoryData: CategoryData) => {
     categoryDataSchema.parse(categoryData);
     const category: Category = { id: uuidv4(), ...categoryData };
     categories.value.push(category);
@@ -17,7 +17,7 @@ const setup = () => {
 
   return {
     categories,
-    storeCategory,
+    store,
   };
 };
 
