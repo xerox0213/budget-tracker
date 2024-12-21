@@ -15,9 +15,16 @@ const setup = () => {
     return transaction;
   };
 
+  const destroy = (transactionId: Transaction["id"]) => {
+    transactions.value = transactions.value.filter(
+      (transaction) => transaction.id !== transactionId,
+    );
+  };
+
   return {
     transactions,
     store,
+    destroy,
   };
 };
 
