@@ -38,4 +38,16 @@ describe("store category action", () => {
       "name",
     );
   });
+
+  it("should fail if the icon is not an emoji", () => {
+    const invalidCategoryData: CategoryData = {
+      name: "matrix",
+      icon: "w",
+      categoryType: "income",
+    };
+
+    expect(() => categoryStore.storeCategory(invalidCategoryData)).toThrowError(
+      "icon",
+    );
+  });
 });
