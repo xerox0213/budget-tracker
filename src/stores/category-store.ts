@@ -10,7 +10,9 @@ const setup = () => {
 
   const storeCategory = (categoryData: CategoryData) => {
     categoryDataSchema.parse(categoryData);
-    categories.value.push({ id: uuidv4(), ...categoryData });
+    const category: Category = { id: uuidv4(), ...categoryData };
+    categories.value.push(category);
+    return category;
   };
 
   return {
