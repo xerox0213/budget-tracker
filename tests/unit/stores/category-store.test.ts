@@ -1,15 +1,18 @@
 import { createPinia, setActivePinia } from "pinia";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { categoryTypeEnum } from "../../../src/schemas/category-schema";
 import { useCategoryStore } from "../../../src/stores/category-store";
+import { useTransactionStore } from "../../../src/stores/transaction-store";
 import { Category, CategoryData } from "../../../src/types/category-type";
 
 let categoryStore: ReturnType<typeof useCategoryStore>;
+let transactionStore: ReturnType<typeof useTransactionStore>;
 
 beforeEach(() => {
   setActivePinia(createPinia());
   categoryStore = useCategoryStore();
+  transactionStore = useTransactionStore();
 });
 
 describe("store action", () => {
@@ -80,5 +83,24 @@ describe("view action", () => {
     const viewedCategory = categoryStore.view("1");
 
     expect(viewedCategory).toBeUndefined();
+  });
+});
+
+describe("destroy action", () => {
+  it("should succeed", () => {
+    const category: Category = {
+      id: "1",
+      name: "matrix",
+      icon: "🕶️",
+      categoryType: categoryTypeEnum.enum.income,
+    };
+    const spy = vi.spyOn(transactionStore, "destroyByCategoryId");
+    spy.mockImplementationOnce(() => {});
+    categoryStore.categories.push(category);
+
+    categoryStore.destroy(category.id);
+
+    expect(spy).toHaveBeenCalledWith(category.id);
+    expect(categoryStore.categories).not.toContainEqual(category);
   });
 });
