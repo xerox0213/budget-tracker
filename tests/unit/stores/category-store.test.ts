@@ -1,6 +1,7 @@
 import { createPinia, setActivePinia } from "pinia";
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { categoryTypeEnum } from "../../../src/schemas/category-schema";
 import { useCategoryStore } from "../../../src/stores/category-store";
 import { CategoryData } from "../../../src/types/category-type";
 
@@ -16,7 +17,7 @@ describe("store category action", () => {
     const validCategoryData = {
       name: "matrix",
       icon: "🕶️",
-      categoryType: "income",
+      categoryType: categoryTypeEnum.enum.income,
     };
 
     const storedCategory = categoryStore.storeCategory(validCategoryData);
@@ -31,7 +32,7 @@ describe("store category action", () => {
     const invalidCategoryData: CategoryData = {
       name: "ma",
       icon: "🕶️",
-      categoryType: "income",
+      categoryType: categoryTypeEnum.enum.expense,
     };
 
     expect(() => categoryStore.storeCategory(invalidCategoryData)).toThrowError(
@@ -43,7 +44,7 @@ describe("store category action", () => {
     const invalidCategoryData: CategoryData = {
       name: "matrix",
       icon: "w",
-      categoryType: "income",
+      categoryType: categoryTypeEnum.enum.income,
     };
 
     expect(() => categoryStore.storeCategory(invalidCategoryData)).toThrowError(
