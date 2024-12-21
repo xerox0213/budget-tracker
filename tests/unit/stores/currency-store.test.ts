@@ -19,4 +19,8 @@ describe("update action", () => {
 
     expect(currencyStore.defaultCurrency).toEqual(currency);
   });
+
+  it("should fail if the currency does not exist", () => {
+    expect(() => currencyStore.update("45")).toThrowError();
+  });
 });
