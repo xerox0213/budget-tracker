@@ -15,9 +15,16 @@ const setup = () => {
     return category;
   };
 
+  const view = (categoryId: Category["id"]) => {
+    return categories.value.find(
+      (category: Category) => category.id === categoryId,
+    );
+  };
+
   return {
     categories,
     store,
+    view,
   };
 };
 
