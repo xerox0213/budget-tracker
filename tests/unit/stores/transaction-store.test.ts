@@ -43,4 +43,16 @@ describe("store action", () => {
       expect.arrayContaining([expect.objectContaining(validTransactionData)]),
     );
   });
+
+  it("should fail if the amount is not a positive number", () => {
+    const invalidTransactionData: TransactionData = {
+      amount: 0,
+      date: "2024-12-21",
+      categoryId: category.id,
+    };
+
+    expect(() => transactionStore.store(invalidTransactionData)).toThrow(
+      "amount",
+    );
+  });
 });
