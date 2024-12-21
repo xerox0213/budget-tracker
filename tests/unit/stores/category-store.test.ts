@@ -75,4 +75,10 @@ describe("view action", () => {
 
     expect(viewedCategory).toEqual(category);
   });
+
+  it("should return undefined", () => {
+    const viewedCategory = categoryStore.view("1");
+
+    expect(viewedCategory).toBeUndefined();
+  });
 });
