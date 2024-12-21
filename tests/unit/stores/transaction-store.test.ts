@@ -55,4 +55,16 @@ describe("store action", () => {
       "amount",
     );
   });
+
+  it("should fail if the date is not a date in the format YYYY-MM-DD", () => {
+    const invalidTransactionData: TransactionData = {
+      amount: 23,
+      date: "21-12-2024",
+      categoryId: category.id,
+    };
+
+    expect(() => transactionStore.store(invalidTransactionData)).toThrow(
+      "date",
+    );
+  });
 });
