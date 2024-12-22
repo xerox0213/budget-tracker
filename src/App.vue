@@ -1,7 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import NavBar from "@/components/layouts/NavBar.vue";
+</script>
 
 <template>
-  <h1 class="text-3xl">Budget Tracker</h1>
+  <NavBar />
 </template>
 
 <style scoped></style>
