@@ -8,6 +8,9 @@ import App from "@/App.vue";
 import { pinia } from "@/plugins/pinia.ts";
 import { primeVueConfig } from "@/plugins/prime-vue.ts";
 import { router } from "@/plugins/vue-router.ts";
+import { initializeTheme } from "@/services/theme-service.ts";
+
+initializeTheme();
 
 const app = createApp(App);
 
