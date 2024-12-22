@@ -53,6 +53,7 @@ export const primeVueConfig = {
   theme: {
     preset: Noir,
     options: {
+      darkModeSelector: ".dark",
       cssLayer: {
         name: "primevue",
         order: "tailwind-base, primevue, tailwind-utilities",
