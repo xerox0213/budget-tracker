@@ -5,6 +5,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import {
   getSavedTheme,
   isCurrentThemeDark,
+  toggleTheme,
 } from "../../../src/services/theme-service";
 
 beforeEach(() => {
@@ -37,5 +38,13 @@ describe("is current theme dark", () => {
 
   it("should return false", () => {
     expect(isCurrentThemeDark()).toBeFalsy();
+  });
+});
+
+describe("toggle theme", () => {
+  it("should add dark class to documentElement", () => {
+    toggleTheme();
+    const containsDark = document.documentElement.classList.contains("dark");
+    expect(containsDark).toBeTruthy();
   });
 });
