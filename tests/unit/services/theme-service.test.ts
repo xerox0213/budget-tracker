@@ -47,4 +47,11 @@ describe("toggle theme", () => {
     const containsDark = document.documentElement.classList.contains("dark");
     expect(containsDark).toBeTruthy();
   });
+
+  it("should remove dark class from documentElement", () => {
+    document.documentElement.classList.add("dark");
+    toggleTheme();
+    const containsDark = document.documentElement.classList.contains("dark");
+    expect(containsDark).toBeFalsy();
+  });
 });
