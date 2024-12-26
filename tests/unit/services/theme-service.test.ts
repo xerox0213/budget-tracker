@@ -34,4 +34,8 @@ describe("is current theme dark", () => {
 
     expect(isCurrentThemeDark()).toBeTruthy();
   });
+
+  it("should return false", () => {
+    expect(isCurrentThemeDark()).toBeFalsy();
+  });
 });
