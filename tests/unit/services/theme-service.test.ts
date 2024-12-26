@@ -17,4 +17,9 @@ describe("get saved theme", () => {
 
     expect(savedTheme).toEqual(theme);
   });
+
+  it("should return undefined if no theme has been saved", () => {
+    const savedTheme = getSavedTheme();
+    expect(savedTheme).toBeUndefined();
+  });
 });
