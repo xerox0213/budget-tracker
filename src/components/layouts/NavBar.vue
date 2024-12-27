@@ -23,23 +23,28 @@ const items = ref([
 </script>
 
 <template>
-  <Menubar :model="items" class="rounded-none">
-    <template #start>
-      <h1 class="text-xl font-bold text-yellow-400">💵 Budget Tracker</h1>
-    </template>
+  <div class="border-b border-surface">
+    <Menubar
+      :model="items"
+      class="container mx-auto rounded-none border-none bg-transparent py-3"
+    >
+      <template #start>
+        <h1 class="text-xl font-bold text-yellow-400">💵 Budget Tracker</h1>
+      </template>
 
-    <template #item="{ item, props }">
-      <RouterLink v-slot="{ href, navigate }" :to="item.route" custom>
-        <a v-ripple :href="href" v-bind="props.action" @click="navigate">
-          <span :class="item.icon" />
-          <span>{{ item.label }}</span>
-        </a>
-      </RouterLink>
-    </template>
-    <template #end>
-      <ThemeButton />
-    </template>
-  </Menubar>
+      <template #item="{ item, props }">
+        <RouterLink v-slot="{ href, navigate }" :to="item.route" custom>
+          <a v-ripple :href="href" v-bind="props.action" @click="navigate">
+            <span :class="item.icon" />
+            <span>{{ item.label }}</span>
+          </a>
+        </RouterLink>
+      </template>
+      <template #end>
+        <ThemeButton />
+      </template>
+    </Menubar>
+  </div>
 </template>
 
 <style scoped></style>
