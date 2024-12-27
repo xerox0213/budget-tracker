@@ -1,7 +1,12 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import PageHeader from "@/components/layouts/PageHeader.vue";
+</script>
 
 <template>
-  <h1 class="text-2xl">Manage</h1>
+  <PageHeader>
+    <template #title>Manage</template>
+    <template #subtitle>Manage you account settings and categories</template>
+  </PageHeader>
 </template>
 
 <style scoped></style>
