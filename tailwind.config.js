@@ -1,3 +1,4 @@
+import colors from "tailwindcss/colors.js";
 import tailwindPrimeUi from "tailwindcss-primeui";
 
 /** @type {import("tailwindcss").Config} */
@@ -8,6 +9,16 @@ export default {
       container: {
         center: true,
         padding: "1rem",
+      },
+      colors: {
+        income: {
+          light: colors.emerald[500],
+          dark: colors.emerald[900],
+        },
+        expense: {
+          light: colors.red[500],
+          dark: colors.red[900],
+        },
       },
     },
   },
