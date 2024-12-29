@@ -7,4 +7,10 @@ describe("get light category color", () => {
     const lightCategoryColor = getLightCategoryColor("income");
     expect(lightCategoryColor).toEqual("income-light");
   });
+
+  it("should return the light color for the expense category", () => {
+    const categoryType = "expense";
+    const lightCategoryColor = getLightCategoryColor(categoryType);
+    expect(lightCategoryColor).toEqual(`${categoryType}-light`);
+  });
 });
