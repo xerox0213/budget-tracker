@@ -4,8 +4,9 @@ import { getLightCategoryColor } from "../../../src/services/category-color-serv
 
 describe("get light category color", () => {
   it("should return the light color for the income category", () => {
-    const lightCategoryColor = getLightCategoryColor("income");
-    expect(lightCategoryColor).toEqual("income-light");
+    const categoryType = "income";
+    const lightCategoryColor = getLightCategoryColor(categoryType);
+    expect(lightCategoryColor).toEqual(`${categoryType}-light`);
   });
 
   it("should return the light color for the expense category", () => {
