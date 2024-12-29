@@ -1,17 +1,14 @@
-import { describe, expect, it } from "vitest";
+import { expect, it } from "vitest";
 
+import { categoryTypeEnum } from "../../../src/schemas/category-schema";
 import { getLightCategoryColor } from "../../../src/services/category-color-service";
 
-describe("get light category color", () => {
-  it("should return the light color for the income category", () => {
-    const categoryType = "income";
-    const lightCategoryColor = getLightCategoryColor(categoryType);
-    expect(lightCategoryColor).toEqual(`${categoryType}-light`);
-  });
+const categoriesType = Object.values(categoryTypeEnum.Values);
 
-  it("should return the light color for the expense category", () => {
-    const categoryType = "expense";
+it.each(categoriesType)(
+  "should return the light color of the category",
+  (categoryType) => {
     const lightCategoryColor = getLightCategoryColor(categoryType);
     expect(lightCategoryColor).toEqual(`${categoryType}-light`);
-  });
-});
+  },
+);
