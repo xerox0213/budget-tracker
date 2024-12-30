@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
+import AddCategoryDialog from "@/components/dialogs/AddCategoryDialog.vue";
 import { getLightCategoryColor } from "@/services/category-color-service.ts";
 import { useCategoryStore } from "@/stores/category-store.ts";
 import type { Category } from "@/types/category-type.ts";
@@ -29,7 +30,7 @@ const lightCategoryColor = computed<string>(() => {
     layout="grid"
   >
     <template #header>
-      <div class="flex flex-wrap justify-between">
+      <div class="flex flex-wrap items-start justify-between gap-3">
         <div>
           <div class="text-2xl font-bold first-letter:uppercase">
             {{ categoryType }} categories
@@ -54,6 +55,7 @@ const lightCategoryColor = computed<string>(() => {
           </div>
           <div>
             <Button
+              size="small"
               severity="danger"
               class="w-full rounded-none"
               @click="categoryStore.destroy(category.id)"
@@ -67,7 +69,7 @@ const lightCategoryColor = computed<string>(() => {
 
     <template #empty>
       <div
-        class="flex min-h-[160px] flex-col items-center justify-center text-center"
+        class="flex min-h-[153px] flex-col items-center justify-center text-center"
       >
         <span>
           No
