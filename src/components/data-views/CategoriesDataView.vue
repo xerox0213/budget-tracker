@@ -37,6 +37,7 @@ const lightCategoryColor = computed<string>(() => {
           </div>
           <div class="text-muted-color">Sorted by name</div>
         </div>
+        <AddCategoryDialog :category-type="categoryType" />
       </div>
     </template>
 
