@@ -3,6 +3,7 @@
 import { beforeEach, expect, it } from "vitest";
 
 import {
+  getSavedTheme,
   saveTheme,
   setDark,
   setLight,
@@ -28,5 +29,11 @@ it("should set theme to light", () => {
 it.each(["auto", "light", "dark"])("should save the given theme", (theme) => {
   saveTheme(theme);
   const themeSaved = localStorage.getItem("theme");
+  expect(themeSaved).toBe(theme);
+});
+
+it.each(["auto", "light", "dark"])("should return the saved theme", (theme) => {
+  localStorage.setItem("theme", theme);
+  const themeSaved = getSavedTheme();
   expect(themeSaved).toBe(theme);
 });
