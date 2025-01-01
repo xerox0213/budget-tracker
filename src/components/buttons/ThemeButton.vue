@@ -1,23 +1,61 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, inject, ref } from "vue";
 
-import { isCurrentThemeDark, toggleTheme } from "@/services/theme-service.ts";
+import { themeKey } from "@/providers/keys.ts";
+import type { ThemeData } from "@/types/theme-type.ts";
 
-const dark = ref<boolean>(isCurrentThemeDark());
+const { theme, switchTheme } = inject(themeKey) as ThemeData;
 
-const handleClick = () => {
-  toggleTheme();
-  dark.value = !dark.value;
-};
+const op = ref();
+
+const items = [
+  {
+    theme: "auto",
+    icon: "pi pi-sparkles",
+    action: () => switchTheme("auto"),
+  },
+  {
+    theme: "light",
+    icon: "pi pi-sun",
+    action: () => switchTheme("light"),
+  },
+  {
+    theme: "dark",
+    icon: "pi pi-moon",
+    action: () => switchTheme("dark"),
+  },
+];
+
+const icon = computed<string>(() => {
+  switch (theme.value) {
+    case "auto":
+      return "pi pi-sparkles";
+    case "light":
+      return "pi pi-sun";
+    case "dark":
+      return "pi pi-moon";
+    default:
+      return "";
+  }
+});
+
+const toggle = (event) => op.value.toggle(event);
 </script>
 
 <template>
-  <Button
-    variant="outlined"
-    size="small"
-    :icon="dark ? 'pi pi-sun' : 'pi pi-moon'"
-    @click="handleClick"
-  />
+  <Button :icon="icon" size="small" outlined @click="toggle" />
+  <Popover ref="op">
+    <div class="flex flex-col gap-y-3">
+      <Button
+        v-for="item in items"
+        :key="item.theme"
+        :icon="item.icon"
+        variant="outlined"
+        size="small"
+        @click="item.action"
+      />
+    </div>
+  </Popover>
 </template>
 
 <style scoped></style>
