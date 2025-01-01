@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import "vue3-emoji-picker/css";
 
-import { ref, useTemplateRef } from "vue";
+import { inject, ref, useTemplateRef } from "vue";
 import EmojiPicker, { type EmojiExt } from "vue3-emoji-picker";
+
+import { themeKey } from "@/providers/keys.ts";
+import type { ThemeData } from "@/types/theme-type.ts";
 
 const model = defineModel<string>();
 
@@ -16,6 +19,8 @@ const onSelectEmoji = ({ i }: EmojiExt) => {
     input.value.dispatchEvent(new Event("input"));
   }
 };
+
+const { theme } = inject(themeKey) as ThemeData;
 </script>
 
 <template>
@@ -33,7 +38,7 @@ const onSelectEmoji = ({ i }: EmojiExt) => {
   </Button>
 
   <Popover ref="op" unstyled>
-    <EmojiPicker theme="light" :native="true" @select="onSelectEmoji" />
+    <EmojiPicker :theme="theme" :native="true" @select="onSelectEmoji" />
   </Popover>
 </template>
 
