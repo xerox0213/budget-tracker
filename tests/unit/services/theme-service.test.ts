@@ -9,6 +9,8 @@ import {
   setLight,
 } from "../../../src/services/theme-service";
 
+const themes = ["auto", "light", "dark"];
+
 beforeEach(() => {
   document.documentElement.classList.remove("dark");
   localStorage.removeItem("theme");
@@ -26,13 +28,13 @@ it("should set theme to light", () => {
   expect(isLight).toBeTruthy();
 });
 
-it.each(["auto", "light", "dark"])("should save the given theme", (theme) => {
+it.each(themes)("should save the given theme", (theme) => {
   saveTheme(theme);
   const themeSaved = localStorage.getItem("theme");
   expect(themeSaved).toBe(theme);
 });
 
-it.each(["auto", "light", "dark"])("should return the saved theme", (theme) => {
+it.each(themes)("should return the saved theme", (theme) => {
   localStorage.setItem("theme", theme);
   const themeSaved = getSavedTheme();
   expect(themeSaved).toBe(theme);
