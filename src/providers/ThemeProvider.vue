@@ -10,7 +10,7 @@ import {
   saveTheme,
   setDark,
   setLight,
-} from "@/services/new-theme-service.ts";
+} from "@/services/theme-service.ts";
 import type { Theme } from "@/types/theme-type.ts";
 
 const theme = ref<Theme>(getSavedTheme());
