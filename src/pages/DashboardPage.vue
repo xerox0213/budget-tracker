@@ -1,7 +1,17 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import AddTransactionDialog from "@/components/dialogs/AddTransactionDialog.vue";
+import PageHeader from "@/components/layouts/PageHeader.vue";
+</script>
 
 <template>
-  <h1 class="text-2xl">Dashboard</h1>
+  <PageHeader>
+    <template #title> Hello 👋</template>
+    <template #subtitle>Welcome in your dashboard</template>
+    <template #actions>
+      <AddTransactionDialog transaction-type="income" />
+      <AddTransactionDialog transaction-type="expense" />
+    </template>
+  </PageHeader>
 </template>
 
 <style scoped></style>
