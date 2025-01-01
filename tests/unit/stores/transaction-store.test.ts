@@ -35,7 +35,7 @@ describe("store action", () => {
   it("should succeed", () => {
     const validTransactionData: TransactionData = {
       amount: 25,
-      date: "2024-12-21",
+      date: new Date(),
       categoryId: category.id,
     };
 
@@ -50,7 +50,7 @@ describe("store action", () => {
   it("should fail if the amount is not a positive number", () => {
     const invalidTransactionData: TransactionData = {
       amount: 0,
-      date: "2024-12-21",
+      date: new Date(),
       categoryId: category.id,
     };
 
@@ -59,10 +59,10 @@ describe("store action", () => {
     );
   });
 
-  it("should fail if the date is not a date in the format YYYY-MM-DD", () => {
+  it("should fail if the date is not a date", () => {
     const invalidTransactionData: TransactionData = {
       amount: 23,
-      date: "21-12-2024",
+      date: "2022-01-12T00:00:00.000Z",
       categoryId: category.id,
     };
 
@@ -74,7 +74,7 @@ describe("store action", () => {
   it("should fail if the category does not exist", () => {
     const invalidTransactionData: TransactionData = {
       amount: 23,
-      date: "2024-12-21",
+      date: new Date(),
       categoryId: "232",
     };
 

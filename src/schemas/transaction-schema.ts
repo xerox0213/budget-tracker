@@ -8,5 +8,5 @@ export const transactionDataSchema = z.object({
   categoryId: z
     .string()
     .refine(categoryExistence.validator, categoryExistence.message),
-  date: z.string().date(),
+  date: z.date(),
 });
