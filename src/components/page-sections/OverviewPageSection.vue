@@ -118,7 +118,7 @@ const { categoriesWithAnalytics: expenseCategoriesWithAnalytics } =
         </div>
         <div class="border bg-primary-contrast border-surface rounded-border">
           <div class="p-3 text-xl font-semibold text-color">
-            Incomes by category
+            Expenses by category
           </div>
           <div class="flex h-[250px] flex-col gap-4 overflow-y-scroll p-3 pt-0">
             <div
