@@ -43,6 +43,12 @@ const getSeverity = (categoryType: Category["categoryType"]) => {
       return "";
   }
 };
+
+const formatDate = (date: Date) => {
+  const offset = date.getTimezoneOffset();
+  date = new Date(date.getTime() - offset * 60 * 1000);
+  return date.toISOString().split("T")[0];
+};
 </script>
 
 <template>
@@ -129,7 +135,7 @@ const getSeverity = (categoryType: Category["categoryType"]) => {
 
       <Column field="date" header="Date" :sortable="true">
         <template #body="{ data }">
-          {{ data.date.toISOString().split("T")[0] }}
+          {{ formatDate(data.date) }}
         </template>
       </Column>
 
