@@ -85,7 +85,7 @@ const formatDate = (date: Date) => {
             outlined
             size="small"
             label="Export CSV"
-            @click="exportCSV($event)"
+            @click="exportCSV()"
           />
         </div>
       </template>

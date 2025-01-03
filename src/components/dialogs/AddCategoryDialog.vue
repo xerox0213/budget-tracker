@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import {
-  Form,
-  FormField,
-  type FormFieldState,
-  type FormSubmitEvent,
-} from "@primevue/forms";
+import { Form, FormField, type FormSubmitEvent } from "@primevue/forms";
 import { zodResolver } from "@primevue/forms/resolvers/zod";
 import { computed, ref } from "vue";
 

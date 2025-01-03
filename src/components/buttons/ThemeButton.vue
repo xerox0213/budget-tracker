@@ -39,7 +39,7 @@ const icon = computed<string>(() => {
   }
 });
 
-const toggle = (event) => op.value.toggle(event);
+const toggle = (event: Event) => op.value.toggle(event);
 </script>
 
 <template>

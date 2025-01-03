@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import "vue3-emoji-picker/css";
+import "node_modules/vue3-emoji-picker/dist/style.css";
 
 import { inject, ref, useTemplateRef } from "vue";
 import EmojiPicker, { type EmojiExt } from "vue3-emoji-picker";
@@ -12,7 +12,7 @@ const model = defineModel<string>();
 const op = ref();
 const input = useTemplateRef("input");
 
-const toggle = (event) => op.value.toggle(event);
+const toggle = (event: Event) => op.value.toggle(event);
 const onSelectEmoji = ({ i }: EmojiExt) => {
   if (input.value) {
     input.value.value = i;
