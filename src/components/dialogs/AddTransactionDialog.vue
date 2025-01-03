@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Form, type FormSubmitEvent } from "@primevue/forms";
 import { zodResolver } from "@primevue/forms/resolvers/zod";
-import { computed, ref, watchEffect } from "vue";
+import { computed, ref } from "vue";
 
 import { transactionDataSchema } from "@/schemas/transaction-schema.ts";
 import { useCategoryStore } from "@/stores/category-store.ts";
@@ -35,6 +35,7 @@ const onSubmit = ({ valid, values }: FormSubmitEvent) => {
   if (valid) {
     const transactionData = values as TransactionData;
     transactionStore.store(transactionData);
+    visible.value = false;
   }
 };
 </script>
