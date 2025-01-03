@@ -69,6 +69,7 @@ const formatDate = (date: Date) => {
     <DataTable
       ref="dt"
       v-model:filters="filters"
+      class="overflow-hidden border border-b border-surface rounded-border"
       :value="transactionsWithCategories"
       filter-display="row"
       paginator
