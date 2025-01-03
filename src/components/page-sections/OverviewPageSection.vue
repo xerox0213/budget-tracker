@@ -110,7 +110,7 @@ const { categoriesWithAnalytics: expenseCategoriesWithAnalytics } =
               class="flex h-full flex-col items-center justify-center"
             >
               <span>No data for the select period</span>
-              <span class="text-sm text-muted-color">
+              <span class="text-center text-sm text-muted-color">
                 Try selecting a different period or try adding new incomes
               </span>
             </div>
@@ -144,7 +144,7 @@ const { categoriesWithAnalytics: expenseCategoriesWithAnalytics } =
               class="flex h-full flex-col items-center justify-center"
             >
               <span>No data for the select period</span>
-              <span class="text-sm text-muted-color">
+              <span class="text-center text-sm text-muted-color">
                 Try selecting a different period or try adding new expenses
               </span>
             </div>
