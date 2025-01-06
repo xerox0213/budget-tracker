@@ -12,6 +12,7 @@
     "@primevue/core": "^4.2.5",
     "@primevue/forms": "^4.2.5",
     "@primevue/themes": "^4.2.5",
+    "chart.js": "^4.4.7",
     "pinia": "^2.3.0",
     "primeicons": "^7.0.0",
     "primevue": "^4.2.5",
