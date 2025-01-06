@@ -4,8 +4,8 @@ import { ref } from "vue";
 
 import MainContent from "@/components/layouts/MainContent.vue";
 import PageHeader from "@/components/layouts/PageHeader.vue";
-import { useTransactionDateRange } from "@/composables/useTransactionDateRange.ts";
-import { useTransactionsWithCategories } from "@/composables/useTransactionsWithCategories.ts";
+import { useTransactionDateRange } from "@/composables/transaction/useTransactionDateRange.ts";
+import { useTransactionsWithCategories } from "@/composables/transaction/useTransactionsWithCategories.ts";
 import { categoryTypeEnum } from "@/schemas/category-schema.ts";
 import { useCategoryStore } from "@/stores/category-store.ts";
 import { useCurrencyStore } from "@/stores/currency-store.ts";

@@ -2,10 +2,10 @@
 import { computed } from "vue";
 
 import PageSection from "@/components/layouts/PageSection.vue";
-import { useCategoriesWithAnalytics } from "@/composables/useCategoriesWithAnalytics.ts";
-import { useTransactionAmount } from "@/composables/useTransactionAmount.ts";
-import { useTransactionDateRange } from "@/composables/useTransactionDateRange.ts";
-import { useTransactionTypeFilter } from "@/composables/useTransactionTypeFilter.ts";
+import { useCategoriesWithAnalytics } from "@/composables/category/useCategoriesWithAnalytics.ts";
+import { useTransactionAmount } from "@/composables/transaction/useTransactionAmount.ts";
+import { useTransactionDateRange } from "@/composables/transaction/useTransactionDateRange.ts";
+import { useTransactionTypeFilter } from "@/composables/transaction/useTransactionTypeFilter.ts";
 import { useCurrencyStore } from "@/stores/currency-store.ts";
 
 const currencyStore = useCurrencyStore();
