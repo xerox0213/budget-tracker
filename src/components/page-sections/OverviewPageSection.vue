@@ -3,8 +3,8 @@ import { computed } from "vue";
 
 import PageSection from "@/components/layouts/PageSection.vue";
 import { useCategoriesWithAnalytics } from "@/composables/category/useCategoriesWithAnalytics.ts";
-import { useTransactionAmount } from "@/composables/transaction/useTransactionAmount.ts";
 import { useTransactionDateRange } from "@/composables/transaction/useTransactionDateRange.ts";
+import { useTransactionTotal } from "@/composables/transaction/useTransactionTotal.ts";
 import { useTransactionTypeFilter } from "@/composables/transaction/useTransactionTypeFilter.ts";
 import { useCurrencyStore } from "@/stores/currency-store.ts";
 
@@ -22,12 +22,12 @@ const { filteredTransactions: expenseTransactions } = useTransactionTypeFilter(
   "expense",
 );
 
-const { amount: incomeAmount } = useTransactionAmount(incomeTransactions);
+const { total: totalIncome } = useTransactionTotal(incomeTransactions);
 
-const { amount: expenseAmount } = useTransactionAmount(expenseTransactions);
+const { total: totalExpense } = useTransactionTotal(expenseTransactions);
 
 const balanceAmount = computed<number>(() => {
-  return incomeAmount.value - expenseAmount.value;
+  return totalIncome.value - totalExpense.value;
 });
 
 const { categoriesWithAnalytics: incomeCategoriesWithAnalytics } =
@@ -56,7 +56,7 @@ const { categoriesWithAnalytics: expenseCategoriesWithAnalytics } =
         >
           <span class="text-muted-color">Income</span>
           <span class="text-xl">
-            {{ incomeAmount }}
+            {{ totalIncome }}
             {{ currencyStore.defaultCurrency.symbol }}
           </span>
         </div>
@@ -66,7 +66,7 @@ const { categoriesWithAnalytics: expenseCategoriesWithAnalytics } =
         >
           <span class="text-muted-color">Expense</span>
           <span class="text-xl">
-            {{ expenseAmount }}
+            {{ totalExpense }}
             {{ currencyStore.defaultCurrency.symbol }}
           </span>
         </div>

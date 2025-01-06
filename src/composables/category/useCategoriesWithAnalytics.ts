@@ -1,6 +1,6 @@
 import { computed, type Ref, toValue } from "vue";
 
-import { useTransactionAmount } from "@/composables/transaction/useTransactionAmount.ts";
+import { useTransactionTotal } from "@/composables/transaction/useTransactionTotal.ts";
 import { useCategoryStore } from "@/stores/category-store.ts";
 import type { Category, CategoryWithAnalytics } from "@/types/category-type.ts";
 import type { Transaction } from "@/types/transaction-type.ts";
@@ -8,7 +8,7 @@ import type { Transaction } from "@/types/transaction-type.ts";
 export const useCategoriesWithAnalytics = (
   transactions: Ref<Transaction[]>,
 ) => {
-  const { amount: total } = useTransactionAmount(transactions);
+  const { total } = useTransactionTotal(transactions);
 
   const transactionsByCategory = computed(() => {
     const result = new Map<Category["id"], Transaction[]>();
