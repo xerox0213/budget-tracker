@@ -10,17 +10,11 @@ export const useTransactionTypeFilter = (
 ) => {
   const filteredTransactions = computed<Transaction[]>(() => {
     const categoryStore = useCategoryStore();
-    const result: Transaction[] = [];
 
-    for (const transaction of toValue(transactions)) {
+    return toValue(transactions).filter((transaction) => {
       const category = categoryStore.view(transaction.categoryId);
-
-      if (category && category.categoryType === transactionType) {
-        result.push(transaction);
-      }
-    }
-
-    return result;
+      return category && category.categoryType === transactionType;
+    });
   });
 
   return { filteredTransactions };
