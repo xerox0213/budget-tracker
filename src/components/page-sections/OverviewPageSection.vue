@@ -1,40 +1,76 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, type Ref, toValue } from "vue";
 
 import PageSection from "@/components/layouts/PageSection.vue";
-import { useCategoriesWithAnalytics } from "@/composables/category/useCategoriesWithAnalytics.ts";
 import { useTransactionDateRange } from "@/composables/transaction/useTransactionDateRange.ts";
-import { useTransactionTotal } from "@/composables/transaction/useTransactionTotal.ts";
-import { useTransactionTypeFilter } from "@/composables/transaction/useTransactionTypeFilter.ts";
+import {
+  filterTransactionsByType,
+  getBalance,
+  getTotalTransactions,
+} from "@/services/transaction-service.ts";
+import { useCategoryStore } from "@/stores/category-store.ts";
 import { useCurrencyStore } from "@/stores/currency-store.ts";
+import type { CategoryAnalytic } from "@/types/category-type.ts";
+import type { Category } from "@/types/category-type.ts";
+import type { Transaction } from "@/types/transaction-type.ts";
 
 const currencyStore = useCurrencyStore();
 
 const { dateRange, transactions } = useTransactionDateRange();
 
-const { filteredTransactions: incomeTransactions } = useTransactionTypeFilter(
-  transactions,
-  "income",
-);
-
-const { filteredTransactions: expenseTransactions } = useTransactionTypeFilter(
-  transactions,
-  "expense",
-);
-
-const { total: totalIncome } = useTransactionTotal(incomeTransactions);
-
-const { total: totalExpense } = useTransactionTotal(expenseTransactions);
-
-const balanceAmount = computed<number>(() => {
-  return totalIncome.value - totalExpense.value;
+const incomeTransactions = computed(() => {
+  return filterTransactionsByType(toValue(transactions), "income");
 });
 
-const { categoriesWithAnalytics: incomeCategoriesWithAnalytics } =
-  useCategoriesWithAnalytics(incomeTransactions);
+const expenseTransactions = computed(() => {
+  return filterTransactionsByType(toValue(transactions), "expense");
+});
 
-const { categoriesWithAnalytics: expenseCategoriesWithAnalytics } =
-  useCategoriesWithAnalytics(expenseTransactions);
+const totalIncomes = computed<number>(() => {
+  return getTotalTransactions(toValue(incomeTransactions));
+});
+
+const totalExpenses = computed<number>(() => {
+  return getTotalTransactions(toValue(expenseTransactions));
+});
+
+const balance = computed<number>(() => {
+  return getBalance(toValue(totalIncomes), toValue(totalExpenses));
+});
+
+const incomeCategoryAnalytics = computed(() => {
+  return getCategoryAnalytics(incomeTransactions, totalIncomes);
+});
+
+const expenseCategoryAnalytics = computed(() => {
+  return getCategoryAnalytics(expenseTransactions, totalExpenses);
+});
+
+const getCategoryAnalytics = (
+  transactions: Ref<Transaction[]>,
+  total: Ref<number>,
+) => {
+  const categoryStore = useCategoryStore();
+  const analyticsByCategory: Map<Category, CategoryAnalytic> = new Map();
+
+  for (const transaction of toValue(transactions)) {
+    const category = categoryStore.view(transaction.categoryId);
+    if (!category) continue;
+    const analytic = analyticsByCategory.get(category);
+
+    if (analytic) {
+      analytic.total += transaction.amount;
+      analytic.part = Math.round((analytic.total / toValue(total)) * 100);
+    } else {
+      analyticsByCategory.set(category, {
+        total: transaction.amount,
+        part: Math.round((transaction.amount / toValue(total)) * 100),
+      });
+    }
+  }
+
+  return analyticsByCategory;
+};
 </script>
 
 <template>
@@ -56,7 +92,7 @@ const { categoriesWithAnalytics: expenseCategoriesWithAnalytics } =
         >
           <span class="text-muted-color">Income</span>
           <span class="text-xl">
-            {{ totalIncome }}
+            {{ totalIncomes }}
             {{ currencyStore.defaultCurrency.symbol }}
           </span>
         </div>
@@ -66,7 +102,7 @@ const { categoriesWithAnalytics: expenseCategoriesWithAnalytics } =
         >
           <span class="text-muted-color">Expense</span>
           <span class="text-xl">
-            {{ totalExpense }}
+            {{ totalExpenses }}
             {{ currencyStore.defaultCurrency.symbol }}
           </span>
         </div>
@@ -75,7 +111,7 @@ const { categoriesWithAnalytics: expenseCategoriesWithAnalytics } =
         >
           <span class="text-muted-color">Balance</span>
           <span class="text-xl">
-            {{ balanceAmount }}
+            {{ balance }}
             {{ currencyStore.defaultCurrency.symbol }}
           </span>
         </div>
@@ -88,25 +124,25 @@ const { categoriesWithAnalytics: expenseCategoriesWithAnalytics } =
           </div>
           <div class="flex h-[250px] flex-col gap-4 overflow-y-scroll p-3 pt-0">
             <div
-              v-for="item in incomeCategoriesWithAnalytics"
-              :key="item.id"
+              v-for="[category, analytic] in incomeCategoryAnalytics"
+              :key="category.id"
               class="flex flex-col gap-2"
             >
               <span>
-                {{ item.icon }}
-                {{ item.name }}
-                ({{ item.transactionAmount }}
+                {{ category.icon }}
+                {{ category.name }}
+                ({{ analytic.total }}
                 {{ currencyStore.defaultCurrency.symbol }})
               </span>
               <ProgressBar
                 :pt="{
                   value: 'bg-income-light',
                 }"
-                :value="item.part"
+                :value="analytic.part"
               />
             </div>
             <div
-              v-if="!incomeCategoriesWithAnalytics.length"
+              v-if="!incomeCategoryAnalytics.size"
               class="flex h-full flex-col items-center justify-center"
             >
               <span>No data for the select period</span>
@@ -122,25 +158,25 @@ const { categoriesWithAnalytics: expenseCategoriesWithAnalytics } =
           </div>
           <div class="flex h-[250px] flex-col gap-4 overflow-y-scroll p-3 pt-0">
             <div
-              v-for="item in expenseCategoriesWithAnalytics"
-              :key="item.id"
+              v-for="[category, analytic] in expenseCategoryAnalytics"
+              :key="category.id"
               class="flex flex-col gap-2"
             >
               <span>
-                {{ item.icon }}
-                {{ item.name }}
-                ({{ item.transactionAmount }}
+                {{ category.icon }}
+                {{ category.name }}
+                ({{ analytic.total }}
                 {{ currencyStore.defaultCurrency.symbol }})
               </span>
               <ProgressBar
                 :pt="{
                   value: 'bg-expense-light',
                 }"
-                :value="item.part"
+                :value="analytic.part"
               />
             </div>
             <div
-              v-if="!expenseCategoriesWithAnalytics.length"
+              v-if="!expenseCategoryAnalytics.size"
               class="flex h-full flex-col items-center justify-center"
             >
               <span>No data for the select period</span>

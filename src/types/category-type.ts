@@ -6,7 +6,4 @@ export type CategoryData = z.infer<typeof categoryDataSchema>;
 
 export type Category = { id: string } & CategoryData;
 
-export type CategoryWithAnalytics = Category & {
-  transactionAmount: number;
-  part: number;
-};
+export type CategoryAnalytic = { total: number; part: number };
