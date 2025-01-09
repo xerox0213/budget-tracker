@@ -6,7 +6,7 @@
       <span class="text-2xl font-bold text-color">
         <slot name="title" />
       </span>
-      <div class="flex flex-row">
+      <div class="flex flex-row flex-wrap gap-2">
         <slot name="actions" />
       </div>
     </div>
