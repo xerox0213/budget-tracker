@@ -2,6 +2,7 @@
 import AddTransactionDialog from "@/components/dialogs/AddTransactionDialog.vue";
 import MainContent from "@/components/layouts/MainContent.vue";
 import PageHeader from "@/components/layouts/PageHeader.vue";
+import HistoryPageSection from "@/components/page-sections/HistoryPageSection.vue";
 import OverviewPageSection from "@/components/page-sections/OverviewPageSection.vue";
 </script>
 
@@ -16,6 +17,7 @@ import OverviewPageSection from "@/components/page-sections/OverviewPageSection.
   </PageHeader>
   <MainContent>
     <OverviewPageSection />
+    <HistoryPageSection />
   </MainContent>
 </template>
 
